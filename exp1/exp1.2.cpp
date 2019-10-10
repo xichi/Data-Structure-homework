@@ -1,6 +1,6 @@
 /* 
-    实验一：
     题目二：带表头节点单链表的初始化、查找、插入、删除、输出、撤销 
+    题目二：单链表的逆置操作
     示例输出结果：
         the linklist is:
         0 1 2 3 4 5 6 7 8
@@ -8,6 +8,28 @@
         0 1 2 3 4 6 7 8
         the found value is:
         4
+    题目三：单链表的排序操作
+    示例输出结果：
+        the linklist is:
+        0 1 2 3 4 5 6 7 8
+        the following linklist is:
+        0 1 2 3 4 6 7 8
+        the found value is:
+        4
+        the reverse linklist is:
+        8 7 6 4 3 2 1 0
+    题目四：单链表的排序操作(从小到大)
+    示例输出结果：
+        the linklist is:
+        0 1 2 3 4 5 6 7 8
+        the following linklist is:
+        0 1 2 3 4 6 7 8
+        the found value is:
+        4
+        the reverse linklist is:
+        8 7 6 4 3 2 1 0
+        the sorted linklist is:
+        0 1 2 3 4 6 7 8
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -102,6 +124,44 @@ void Destroy(HeaderList *h){
     free((*h).head);
 }
 
+Status reverse(HeaderList *h){     //头插法：每次取一个结点p，让这个结点指向head的下一位，同时让head指向p
+    Node *p, *q;
+    if (!h->n)
+        return ERROR;
+    p = h->head;  
+    p = p->link;
+    h->head->link = NULL;
+    while(p){
+        q = p->link;              
+        p->link = h->head->link;   
+        h->head->link = p;
+        p = q;
+    }
+    return OK;
+}
+
+Status sort(HeaderList *h){         //冒泡排序法
+	if (h->n == 0)
+		return OK;
+	Node *p = h->head->link;
+    int i, j, temp;
+	for (i = 0; i < h->n - 1; i++)
+	{
+        p = h->head->link;
+		for (j = 0; j < h->n -i -1; j++)
+		{
+			if (p->element > p->link->element)
+			{
+                temp = p->element;
+				p->element = p->link->element;
+				p->link->element = temp;	
+			}
+            p = p->link;
+		}
+	}
+    return OK;
+}
+
 int main(){
     int i;
     int x;
@@ -118,6 +178,12 @@ int main(){
     Find(&list, 5, &x);
     printf("\nthe found value is:\n");
     printf("%d ", x);
+    printf("\nthe reverse linklist is:\n");
+    reverse(&list);
+    Output(&list);
+    printf("\nthe sorted linklist is:\n");
+    sort(&list);
+    Output(&list);
     Destroy(&list);
     getchar();
     return 0;
