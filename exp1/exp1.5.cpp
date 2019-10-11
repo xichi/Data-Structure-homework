@@ -9,14 +9,14 @@ typedef struct PNode{
  
 typedef struct{
     struct PNode *head;
-}polynominal;
+}polynomial;
 
 //多项式的创建
-void Create(polynominal *p){
+void Create(polynomial *p){
     PNode *pn,*pre,*q;
     p->head = (PNode*)malloc(sizeof(PNode));
     p->head->exp = -1;
-    p->head->link = p->head;               //对教材做了修改
+    p->head->link = p->head;               //对教材做了修改：头指针向下移动
     //p->head->link = NULL;                //教材原代码
     for(;;){
         pn=(PNode*)malloc(sizeof(PNode));
@@ -27,7 +27,7 @@ void Create(polynominal *p){
         if(pn->exp<0) break;
         pre = p->head;
         q = p->head->link;
-        while(q && q->exp > pn->exp){
+        while(q && q->exp > pn->exp){      //插入项并保持多项式的各项为降幂排序
             pre = q;
             q = q->link;
         }
@@ -37,7 +37,7 @@ void Create(polynominal *p){
 }
 
 //多项式输出
-void Output(polynominal p){
+void Output(polynomial p){
     PNode *q;
     int flag = 1;                                   //打标记,记录是否为第一项
     q = p.head->link;
@@ -61,7 +61,7 @@ void Output(polynominal p){
 }
 
 //多项式的相加,结果存入qx中
-void Add(polynominal *px,polynominal *qx){
+void Add(polynomial *px,polynomial *qx){
     PNode *q,*q1 = qx->head,*p, *p1,*temp;    //q1指向qx的表头结点
     p = px->head->link;                       //p指向多项式px的第一个结点
     p1 = px->head;
@@ -95,11 +95,12 @@ void Add(polynominal *px,polynominal *qx){
             p = p->link;
         }
    }
+   
 }
 
-//多项式乘法,暂时没有问题
-void Multiply(polynominal *px,polynominal *qx){
-    polynominal qx1,qx2;
+//多项式乘法
+void Multiply(polynomial *px,polynomial *qx){
+    polynomial qx1,qx2;
     PNode *q1,*q2,*q3,*q4,*pre;
     qx1.head = (PNode*)malloc(sizeof(PNode));       //生成新多项式qx1
     qx1.head->exp = -1;
@@ -146,23 +147,25 @@ void Multiply(polynominal *px,polynominal *qx){
         }
         Add(&qx2,&qx1);                            //合并同类项
         q1 = q1->link;
-    }
+    } 
     Output(qx1);
-}
-
+} 
 
 int main(){
-    polynominal p,q;
+    polynomial p,q;
     printf("Please enter the first poly:\n");
     Create(&p);
+    printf("A(x)=");
     Output(p);
     printf("\n\nPlease enter the second poly:\n");
     Create(&q);
+    printf("B(x)=");
     Output(q);
-    printf("\nAdd:\n");
+    printf("\nD(x)=A(x)*B(x):");
+    Multiply(&p,&q);
+    printf("\nC(x)=A(x)+B(x):");
     Add(&p,&q);
     Output(q);
-    printf("\nMultiply:\n");
-    Multiply(&p,&q);
+    getchar();
     return 0;
 }

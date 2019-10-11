@@ -1,6 +1,6 @@
 /* 
     题目二：带表头节点单链表的初始化、查找、插入、删除、输出、撤销 
-    题目二：单链表的逆置操作
+    题目三：单链表的逆置操作
     示例输出结果：
         the linklist is:
         0 1 2 3 4 5 6 7 8
@@ -8,16 +8,6 @@
         0 1 2 3 4 6 7 8
         the found value is:
         4
-    题目三：单链表的排序操作
-    示例输出结果：
-        the linklist is:
-        0 1 2 3 4 5 6 7 8
-        the following linklist is:
-        0 1 2 3 4 6 7 8
-        the found value is:
-        4
-        the reverse linklist is:
-        8 7 6 4 3 2 1 0
     题目四：单链表的排序操作(从小到大)
     示例输出结果：
         the linklist is:
